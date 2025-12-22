@@ -20,6 +20,7 @@ To maintain security best practices:
 This approach ensures the repository remains safe, professional, and suitable for public viewing.
 
 ## Repository Structure (with Images)
+
 overthewire-writeups/
 ├── README.md
 ├── bandit/
@@ -42,6 +43,7 @@ overthewire-writeups/
 ├── leviathan00.md
 └── images/
 └── leviathan00.jpg
+
 Each level is documented individually, with related images stored in a dedicated `images` directory for clarity and maintainability.
 
 ## Notes
