@@ -31,3 +31,46 @@ Satu-satunya tantangan adalah **menemukannya**.
 ### 1. Login via SSH
 ```bash
 ssh leviathan0@leviathan.labs.overthewire.org -p 2223
+
+2. Enumerate home directory
+ls -la
+
+
+Output akan menampilkan file tersembunyi:
+
+.bookmarks.html
+
+
+File ini readable oleh user saat ini.
+
+3. Inspect file content
+cat .bookmarks.html
+
+
+Di dalam file HTML tersebut terdapat bookmark yang menyimpan credential secara plain text.
+
+Password untuk user leviathan1 dapat langsung dibaca tanpa decoding atau dekripsi.
+
+Result
+
+Password untuk Leviathan Level 1 berhasil diperoleh dari file .bookmarks.html.
+
+Key Takeaways
+
+Enumeration adalah fondasi eksploitasi
+
+Jangan pernah mengabaikan file tersembunyi
+
+Banyak sistem gagal bukan karena exploit rumit, tapi karena human error
+
+Level ini bukan soal skill tinggi, tapi soal disiplin dasar.
+Kalau level ini bikin bingung, level selanjutnya bakal lebih kejam.
+
+
+---
+
+kalau mau:
+- lanjut **leviathan1.md** (mulai binary password checker)
+- atau mau gua bikinin **struktur folder + naming convention** biar portofolio lu kelihatan serius, bukan repo asal jadi
+
+tinggal bilang.
