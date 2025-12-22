@@ -1,7 +1,17 @@
-# Leviathan Level 3 → Level 4
+# OverTheWire Leviathan Write-up
+
+## Leviathan Level 3 → Level 4
 
 ## Objective
-Retrieve the password for the next level by discovering and exploiting a hidden SUID binary.
+Retrieve the password for the next level by analyzing a SUID binary and extracting hardcoded credentials embedded inside it.
+
+Level ini fokus ke:
+- Observasi perilaku binary
+- Analisis string statis
+- Memahami kesalahan desain program sederhana
+
+Tidak ada exploit rumit.  
+Yang diuji di sini adalah **ketelitian dan kebiasaan analisis dasar**.
 
 ---
 
@@ -9,18 +19,14 @@ Retrieve the password for the next level by discovering and exploiting a hidden 
 - Remote Linux system (OverTheWire Leviathan)
 - SSH access
 - User: `leviathan3`
-- Hidden directory with executable files
-- SUID-enabled binary owned by `leviathan4`
+- SUID executable binary
+- No source code provided
+- Standard Linux tools available (`strings`, `ls`, `cat`)
 
 ---
 
 ## Challenge Overview
-Home directory terlihat kosong kalau cuma pakai `ls` biasa.
-Namun terdapat **direktori tersembunyi** yang berisi binary penting.
+Di home directory user `leviathan3` terdapat sebuah binary bernama:
 
-Tidak ada hint eksplisit.
-Tidak ada error message ramah.
-Ini murni soal **ketelitian enumerasi**.
-
----
-
+```text
+leviathan3
