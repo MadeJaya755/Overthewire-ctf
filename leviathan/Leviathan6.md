@@ -1,7 +1,17 @@
-# Leviathan Level 6 → Level 7
+# OverTheWire Leviathan Write-up
+
+## Leviathan Level 6 → Level 7 (Final)
 
 ## Objective
-Retrieve the password for the next level by performing a targeted brute-force attack on a binary that checks password lengths.
+Retrieve the password for the final level by exploiting a SUID binary through controlled brute force of a numeric PIN.
+
+Level terakhir ini menguji:
+- Pemahaman SUID binary
+- Kesabaran dan automasi sederhana
+- Realistisnya brute force dalam ruang pencarian kecil
+
+Ini bukan soal pinter.  
+Ini soal **nggak males dan tahu kapan brute force itu masuk akal**.
 
 ---
 
@@ -9,10 +19,14 @@ Retrieve the password for the next level by performing a targeted brute-force at
 - Remote Linux system (OverTheWire Leviathan)
 - SSH access
 - User: `leviathan6`
-- Binary with SUID bit owned by `leviathan7`
-- Limited permissions on password file
+- SUID executable binary
+- No source code provided
+- Standard Linux utilities available (`bash`, `seq`, `grep`)
 
 ---
 
 ## Challenge Overview
-Binary:
+Di home directory user `leviathan6` terdapat sebuah binary bernama:
+
+```text
+leviathan6
