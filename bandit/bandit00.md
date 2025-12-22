@@ -1,28 +1,17 @@
-\# Bandit Level 0 → Level 1
+# Bandit Level 0 → Level 1
 
+## Objective
+Retrieve the password for the next level by performing basic file enumeration.
 
+## Environment
+- Remote Linux system (OverTheWire Bandit)
+- Access via SSH
 
-\## Objective
+## Approach
+After connecting to the server, basic directory listing was performed to identify available files.  
+A readable file containing the credentials was found in the home directory.
 
-Retrieve the password for the next level.
-
-
-
-\## Steps
-
-Basic file enumeration was performed to locate the credentials file.
-
-
-
-\## Evidence
-
-!\[Bandit Level 0](images/bandit00.jpg)
-
-
-
-\## Key Takeaway
-
-Understanding basic Linux navigation and file inspection.
-
-
-
+## Commands Used
+```bash
+ls
+cat readme
