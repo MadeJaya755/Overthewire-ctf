@@ -24,8 +24,3 @@ Ini murni soal **ketelitian enumerasi**.
 
 ---
 
-## Approach
-
-### 1. Enumerate hidden files
-```bash
-ls -la
