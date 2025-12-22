@@ -18,3 +18,36 @@ To maintain security best practices:
 - Private key files or raw secrets are **never committed** to the repository
 
 This approach ensures the repository remains safe, professional, and suitable for public viewing.
+
+## Repository Structure (with Images)
+
+overthewire-writeups/
+├── README.md
+├── bandit/
+│ ├── bandit00.md
+│ ├── bandit01.md
+│ ├── bandit02.md
+│ └── images/
+│ ├── bandit00.jpg
+│ ├── bandit01.jpg
+│ └── bandit02.jpg
+├── natas/
+│ ├── natas00.md
+│ └── images/
+│ └── natas00.jpg
+├── krypton/
+│ ├── krypton00.md
+│ └── images/
+│ └── krypton00.jpg
+└── leviathan/
+├── leviathan00.md
+└── images/
+└── leviathan00.jpg
+
+
+Each level is documented individually, with related images stored in a dedicated `images` directory for clarity and maintainability.
+
+## Notes
+
+This repository prioritizes clear explanations, structured documentation, and security hygiene.  
+The goal is to demonstrate practical understanding and problem-solving methodology rather than simply presenting solutions.
