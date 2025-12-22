@@ -55,22 +55,4 @@ Result
 
 Password untuk Leviathan Level 1 berhasil diperoleh dari file .bookmarks.html.
 
-Key Takeaways
 
-Enumeration adalah fondasi eksploitasi
-
-Jangan pernah mengabaikan file tersembunyi
-
-Banyak sistem gagal bukan karena exploit rumit, tapi karena human error
-
-Level ini bukan soal skill tinggi, tapi soal disiplin dasar.
-Kalau level ini bikin bingung, level selanjutnya bakal lebih kejam.
-
-
----
-
-kalau mau:
-- lanjut **leviathan1.md** (mulai binary password checker)
-- atau mau gua bikinin **struktur folder + naming convention** biar portofolio lu kelihatan serius, bukan repo asal jadi
-
-tinggal bilang.
