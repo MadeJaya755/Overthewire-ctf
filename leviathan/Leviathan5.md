@@ -1,7 +1,14 @@
-# Leviathan Level 5 → Level 6
+# OverTheWire Leviathan Write-up
+
+## Leviathan Level 5 → Level 6
 
 ## Objective
-Retrieve the password for the next level by exploiting a SUID binary that uses an insecure temporary file.
+Retrieve the password for the next level by abusing a poorly designed SUID binary that relies on file existence checks instead of proper access control.
+
+Level ini menguji:
+- Pemahaman permission Linux
+- Cara kerja SUID binary
+- Kenapa “cek file ada atau tidak” itu bukan mekanisme keamanan
 
 ---
 
@@ -9,10 +16,14 @@ Retrieve the password for the next level by exploiting a SUID binary that uses a
 - Remote Linux system (OverTheWire Leviathan)
 - SSH access
 - User: `leviathan5`
-- SUID-enabled binary owned by `leviathan6`
-- Writable `/tmp` directory
+- SUID executable binary
+- No source code provided
+- Standard Linux utilities available
 
 ---
 
 ## Challenge Overview
-Di home directory terdapat sebuah binary SUID:
+Di home directory user `leviathan5` terdapat sebuah binary bernama:
+
+```text
+leviathan5
