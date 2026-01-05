@@ -1,38 +1,25 @@
-# Bandit Level 20 → Level 21
+# OverTheWire Bandit — Level 20
 
 ## Objective
-Retrieve the password for the next level by interacting with a SUID binary that communicates over a TCP connection.
+Retrieve the password for the next level by interacting with a SUID binary that connects to a local network port.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
-- SUID-enabled binary
-- Local TCP connection
+## Access
+* **Host:** bandit.labs.overthewire.org
+* **Port:** 2220
+* **Username:** bandit20
 
-## Challenge Overview
-Di home directory terdapat binary SUID bernama `suconnect`.
+## Method
+The home directory contains a SUID binary named `suconnect`. This program is designed to connect to a specific port on `localhost`. Upon connection, it expects to receive the current level's password. If the password matches, it sends back the password for the next level.
 
-Karakteristiknya:
-- Binary dijalankan sebagai **bandit21**
-- Binary akan:
-  1. Membuka koneksi ke port tertentu
-  2. Menunggu input berupa password level saat ini
-  3. Jika benar, mengirimkan password level berikutnya
+1.  **Set up a Listener:** Use Netcat to listen on a random port (e.g., `nc -l -p 1234`) in one terminal window (or using `&` to run in background).
+2.  **Execute Binary:** Run `./suconnect 1234` to force the binary to connect to your listener.
+3.  **Authenticate:** Paste the current password (`EeoULMCra2q0dSkYj561DX7s1CpBuOBt`) into the Netcat listener. The binary verifies it and replies with the new password.
 
-Masalahnya:  
-lu harus **menyediakan listener dulu**. Kalau gak, binary ini cuma bengong.
+## Result
+Password for the next level retrieved successfully.
 
-## Approach
-1. Buka **dua terminal / dua session SSH**.
-2. Terminal pertama:
-   - Siapkan listener menggunakan `nc`.
-3. Terminal kedua:
-   - Jalankan binary SUID dan arahkan koneksi ke listener.
-4. Kirim password level 20 lewat listener.
-5. Tangkap response berisi password level 21.
+`tRae0UfB9v0UzbCdn9cY0gQnds9GF58Q`
 
-## Commands Used
-
-### Terminal 1 – Listener
-```bash
-nc -lvp 1234
+## Key Takeaway
+* **Netcat (`nc`)** can operate in listening mode (`-l`), acting effectively as a server.
+* Testing network applications often requires setting up your own endpoints to receive and validate connections.
