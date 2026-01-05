@@ -1,21 +1,26 @@
-# Bandit Level 16 → Level 17
+# OverTheWire Bandit — Level 16
 
 ## Objective
-Retrieve the password for the next level by interacting with a service running on a non-standard port.
+Retrieve the credentials for the next level by scanning a range of ports to identify a service that accepts the current password over SSL.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
-- Service running on localhost port 30002
+## Access
+* **Host:** bandit.labs.overthewire.org
+* **Port:** 2220
+* **Username:** bandit16
 
-## Challenge Overview
-- Service berjalan di port **30002**.  
-- Tidak ada file atau interface web.  
-- Koneksi harus dilakukan via TCP, service menerima password dari level sebelumnya dan mengembalikan password berikutnya.
+## Method
+The password for the next level is hosted on a specific port within the range **31000 to 32000**.
+1.  **Port Scanning:** Used `nmap` to scan the specified range (`nmap -p 31000-32000 localhost`) to identify open ports.
+2.  **Service Identification:** Checked which of the open ports supported **SSL** and echoed input.
+3.  **Retrieval:** Connected using `openssl s_client -connect localhost:<found_port>` and submitted the current password (`EReVavePLFHtFlFsjn3hyzMlvSuSAcRD`).
 
-Mirip Level 15, tapi **non-SSL**, jadi cukup TCP polos.
+The service responded with an **RSA Private Key** instead of a plain password.
 
-## Approach
-1. Read current password:
-```bash
-cat /etc/bandit_pass/bandit16
+## Result
+SSH Private Key for the next level retrieved successfully.
+(This key is used to log in as `bandit17` instead of a password).
+
+## Key Takeaway
+* Port scanning allows the discovery of hidden services within a network range.
+* Not all credentials are simple text strings; SSH keys are a common method for privileged access.
+* `nmap` is essential for reconnaissance and discovering listening ports.
