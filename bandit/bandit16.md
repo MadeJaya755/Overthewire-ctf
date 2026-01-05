@@ -18,7 +18,7 @@ The service responded with an **RSA Private Key** instead of a plain password.
 
 ## Result
 SSH Private Key for the next level retrieved successfully.
-(This key is used to log in as `bandit17` instead of a password).
+EReVavePLFHtFlFsjn3hyzMlvSuSAcRD.
 
 ## Key Takeaway
 * Port scanning allows the discovery of hidden services within a network range.
