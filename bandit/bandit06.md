@@ -1,23 +1,34 @@
-# Bandit Level 6 → Level 7
+# OverTheWire Bandit — Level 6
 
 ## Objective
-Retrieve the password for the next level by locating a file owned by a specific user and group.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- Access via SSH
+Locate the password stored somewhere on the system outside the home directory.
 
-## Challenge Overview
-The password is stored somewhere on the system, but only one file matches all required conditions:
-- Owned by a specific user
-- Owned by a specific group
-- Specific file size
+## Access
 
-## Approach
-A system-wide search was performed while filtering files based on ownership and size.  
-Permission errors were suppressed to keep the output clean and focused.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit6
 
-## Commands Used
-```bash
-find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null
-cat /var/lib/dpkg/info/bandit7.password
+## Method
+
+The password is hidden in the filesystem and can only be found by searching with specific attributes:
+
+* Owned by a specific user
+* Belongs to a specific group
+* Exact file size
+
+A targeted system-wide search based on these constraints reveals the correct file.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj
+```
+
+## Key Takeaway
+
+* Precise search criteria are essential when the scope expands beyond a single directory.
+* Broad searches without filters waste time and attention.
