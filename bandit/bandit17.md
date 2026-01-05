@@ -1,30 +1,23 @@
-# Bandit Level 17 → Level 18
+# OverTheWire Bandit — Level 17
 
 ## Objective
-Retrieve the password for the next level by comparing two files and identifying the difference.
+Retrieve the password for the next level by comparing two files to identify the line that has been modified.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
-- Two text files provided in the home directory
+## Access
+* **Host:** bandit.labs.overthewire.org
+* **Port:** 2220
+* **Username:** bandit17 (Accessed via the SSH private key retrieved in Level 16)
 
-## Challenge Overview
-Terdapat dua file:
-- `passwords.old`
-- `passwords.new`
+## Method
+The home directory contains two files: `passwords.old` and `passwords.new`. The password for the next level is the only line that has changed between these two files.
 
-Keduanya hampir identik.  
-Password untuk level berikutnya adalah **satu-satunya baris yang berbeda** di antara kedua file tersebut.
+By using the **`diff`** command (`diff passwords.old passwords.new`), the system compares the contents line-by-line. The output displays the difference, revealing the new password string found in `passwords.new`.
 
-Kalau lu coba baca manual, buang waktu. Ini kerjaan `diff`.
+## Result
+Password for the next level retrieved successfully.
 
-## Approach
-1. List file yang tersedia.
-2. Bandingkan kedua file menggunakan `diff`.
-3. Identifikasi baris yang berbeda.
-4. Ambil password dari hasil perbandingan.
+`cGWpMaKXVwDUNgPAVJbWYuGHVn9zl3j8`
 
-## Commands Used
-```bash
-ls
-diff passwords.old passwords.new
+## Key Takeaway
+* Comparing file contents is a common task in system administration and forensics.
+* The `diff` tool is efficient for identifying changes, patches, or modifications between file versions.
