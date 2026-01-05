@@ -1,20 +1,30 @@
-# Bandit Level 1 → Level 2
+# OverTheWire Bandit — Level 1
 
 ## Objective
-Retrieve the password for the next level from a file with an unusual filename.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- Access via SSH
+Access the file containing the password for the next level.
 
-## Challenge Overview
-The target file does not follow standard naming conventions, which may cause issues when accessed using common commands.
+## Access
 
-## Approach
-After listing the files in the home directory, a file with a name resembling a dash (`-`) was identified.  
-Because filenames starting with special characters can be misinterpreted as command options, an explicit method was required to read the file safely.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit1
 
-## Commands Used
-```bash
-ls
-cat ./-
+## Method
+
+The password is stored in a file named `-`, which cannot be read directly without explicitly specifying the path.
+
+By referencing the file with a relative path, the content can be accessed normally.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+263JGJPfgU6LtdEvgfWU1XP5yac29mFx
+```
+
+## Key Takeaway
+
+* Filenames starting with special characters require explicit path handling.
+* Understanding basic shell behavior prevents simple mistakes.
