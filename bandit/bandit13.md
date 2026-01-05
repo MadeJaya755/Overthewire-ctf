@@ -1,31 +1,30 @@
-# Bandit Level 13 → Level 14
+# OverTheWire Bandit — Level 13
 
 ## Objective
-Retrieve the password for the next level by using an SSH private key instead of a password.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
-- SSH private key provided in the home directory
+Use an SSH private key to access the next level and retrieve the password.
 
-## Challenge Overview
-Unlike previous levels, **no password is given**.  
-Instead, an SSH private key file named `sshkey.private` is provided.
+## Access
 
-This level tests understanding of:
-- SSH authentication
-- File permissions
-- Key-based login
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit13
 
-If you try to log in with a password, you’re wasting time.
+## Method
 
-## Approach
-1. List files in the home directory to locate the SSH private key.
-2. Ensure the key has correct permissions (SSH is strict).
-3. Use the key to authenticate to the next level via SSH.
-4. Retrieve the password stored on the remote system.
+Instead of a password, access to the next level is granted via an SSH private key provided in the home directory.
 
-## Commands Used
-```bash
-ls
-chmod 600 sshkey.private
+By using key-based authentication, a secure login can be established without relying on a plaintext password.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+```
+
+## Key Takeaway
+
+* SSH key-based authentication is stronger than passwords.
+* Proper handling of private keys is critical for system security.
