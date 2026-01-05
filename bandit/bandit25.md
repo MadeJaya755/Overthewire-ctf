@@ -1,35 +1,24 @@
-# Bandit Level 25 → Level 26
+# OverTheWire Bandit — Level 25
 
 ## Objective
-Retrieve the password for the next level by escaping a restricted shell environment.
+Retrieve the authentication credential for the next level, which is provided as an SSH private key rather than a text password.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
-- Restricted shell (`rbash`)
-- SSH private key provided
+## Access
+* **Host:** bandit.labs.overthewire.org
+* **Port:** 2220
+* **Username:** bandit25
 
-## Challenge Overview
-Saat login ke **bandit25**, kita:
-- Dipaksa masuk ke **restricted shell**
-- Tidak bisa:
-  - ganti directory
-  - set PATH
-  - menjalankan banyak command
-- Terlihat seperti buntu
+## Method
+The home directory contains a file named `bandit26.sshkey`. The instructions indicate that the shell for the next user (`bandit26`) is not a standard bash shell, but for this level, the goal is simply to obtain the key.
 
-Padahal enggak.  
-Restricted shell itu **kosmetik**, bukan penjara.
+1.  **Identify Key:** Verify the file exists (`ls -l`).
+2.  **Usage:** This key must be used to authenticate as the next user.
+    Command: `ssh -i bandit26.sshkey bandit26@localhost`
 
-## Approach
-1. Login menggunakan SSH key yang disediakan.
-2. Perhatikan bahwa shell dibatasi.
-3. Manfaatkan program yang **masih diizinkan** untuk escape shell.
-4. Dapatkan shell normal sebagai user **bandit26**.
-5. Ambil password level berikutnya.
+## Result
+SSH Private Key obtained successfully.
+s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ.
 
-## Commands Used
-
-Login dengan key:
-```bash
-ssh -i bandit26.sshkey bandit26@localhost
+## Key Takeaway
+* **SSH Identity Files:** Private keys (`.pem`, `id_rsa`, etc.) can be used for login without a password prompt.
+* **Permissions:** SSH keys generally require strict file permissions (readable only by the owner) to function correctly.
