@@ -1,28 +1,23 @@
-# Bandit Level 18 → Level 19
+# OverTheWire Bandit — Level 18
 
 ## Objective
-Retrieve the password for the next level despite being immediately logged out after SSH login.
+Retrieve the password from a file named `readme` in the home directory, despite being immediately logged out upon establishing an SSH connection.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
-- Auto-logout mechanism enabled on login
+## Access
+* **Host:** bandit.labs.overthewire.org
+* **Port:** 2220
+* **Username:** bandit18
 
-## Challenge Overview
-Saat login ke Bandit Level 18:
-- SSH berhasil
-- Tapi langsung **auto-logout**
-- Tidak ada kesempatan mengetik perintah
+## Method
+The user's shell configuration (likely `.bashrc`) has been modified to instantly terminate the session upon login, displaying a "Byebye !" message.
 
-Ini disengaja. Tujuannya ngetes apakah lu ngerti kalau SSH bisa **menjalankan command langsung tanpa shell**.
+To bypass this, commands can be executed directly via the SSH client without launching the interactive shell. By appending the command `'cat readme'` (or forcing a shell like `'/bin/sh'`) to the end of the SSH connection string, the system executes the command and returns the output before the logout script triggers.
 
-## Approach
-1. Jangan login interaktif.
-2. Gunakan SSH untuk langsung mengeksekusi perintah.
-3. Baca file password untuk level berikutnya.
-4. Ambil output sebelum koneksi ditutup.
+## Result
+Password for the next level retrieved successfully.
 
-## Commands Used
-Langsung eksekusi command lewat SSH:
-```bash
-ssh bandit18@bandit.labs.overthewire.org -p 2220 cat /etc/bandit_pass/bandit19
+`0qXahG8ZjOVMN9Ghs7iOWsCfZyXOUbYO`
+
+## Key Takeaway
+* SSH allows for remote command execution without requiring a full interactive shell session.
+* This technique is critical for bypassing restricted shells or broken startup scripts that prevent standard logins.
