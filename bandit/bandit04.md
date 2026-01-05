@@ -1,22 +1,30 @@
-# Bandit Level 4 → Level 5
+# OverTheWire Bandit — Level 4
 
 ## Objective
-Retrieve the password for the next level from a file that is human-readable among multiple files.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- Access via SSH
+Identify and read the file containing human-readable data to obtain the next password.
 
-## Challenge Overview
-The directory contains multiple files, most of which are not human-readable.  
-Only one file contains readable text and holds the password.
+## Access
 
-## Approach
-After listing the directory contents, each file was inspected to determine its type.  
-By identifying the file with readable text, the password could be extracted safely.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit4
 
-## Commands Used
-```bash
-ls
-file ./*
-cat ./-file07
+## Method
+
+The target directory contains multiple files, most of which hold non-readable binary data.
+
+By checking file types and focusing on human-readable content, the correct file can be identified and read.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw
+```
+
+## Key Takeaway
+
+* Not all files are plain text; identify file types before reading.
+* Filtering noise is a core skill during enumeration.
