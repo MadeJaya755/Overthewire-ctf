@@ -1,21 +1,30 @@
-# Bandit Level 3 → Level 4
+# OverTheWire Bandit — Level 3
 
 ## Objective
-Retrieve the password for the next level from a hidden file.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- Access via SSH
+Locate and read the password stored in a hidden file.
 
-## Challenge Overview
-The password is stored in a hidden file, which is not displayed by default when listing directory contents.
+## Access
 
-## Approach
-After checking the home directory, standard listing did not reveal any readable files.  
-By using an option to display hidden files, the target file became visible and could be accessed normally.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit3
 
-## Commands Used
-```bash
-ls
-ls -a
-cat .hidden
+## Method
+
+The password is located inside a hidden file within the target directory. Hidden files are not shown by default and require explicit listing.
+
+By enabling the display of hidden files, the password file becomes visible and accessible.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ
+```
+
+## Key Takeaway
+
+* Hidden files are commonly used to conceal sensitive data.
+* Always enumerate directories thoroughly, including hidden entries.
