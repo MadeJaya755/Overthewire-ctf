@@ -1,17 +1,28 @@
-# Bandit Level 0 → Level 1
+# OverTheWire Bandit — Level 0
 
 ## Objective
-Retrieve the password for the next level by performing basic file enumeration.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- Access via SSH
+Log in to the Bandit server using SSH and retrieve the password for the next level.
 
-## Approach
-After connecting to the server, basic directory listing was performed to identify available files.  
-A readable file containing the credentials was found in the home directory.
+## Access
 
-## Commands Used
-```bash
-ls
-cat readme
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit0
+
+## Method
+
+Establish an SSH connection with the provided credentials, then read the file placed in the home directory.
+
+## Result
+
+Password for the next level obtained successfully.
+
+```
+ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
+```
+
+## Key Takeaway
+
+* Basic SSH access and file reading are fundamental.
+* Never skip obvious files in a target environment.
