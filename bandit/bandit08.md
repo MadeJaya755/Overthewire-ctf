@@ -1,20 +1,30 @@
-# Bandit Level 8 → Level 9
+# OverTheWire Bandit — Level 8
 
 ## Objective
-Retrieve the password for the next level from a file where only one line is unique.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- Access via SSH
+Retrieve the password by identifying the unique line in a file.
 
-## Challenge Overview
-The file contains many repeated lines, but only one line appears once.  
-That unique line contains the password.
+## Access
 
-## Approach
-The file content was sorted to group identical lines together.  
-After sorting, a utility was used to extract the line that appears only once.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit8
 
-## Commands Used
-```bash
-sort data.txt | uniq -u
+## Method
+
+The file contains many repeated lines, with only one line appearing once.
+
+By identifying the unique entry among duplicates, the correct password can be isolated without manually inspecting the file.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
+```
+
+## Key Takeaway
+
+* Pattern recognition is critical when dealing with repetitive data.
+* Let tools do the heavy lifting instead of manual comparison.
