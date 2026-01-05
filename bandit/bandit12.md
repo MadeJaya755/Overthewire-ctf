@@ -1,22 +1,30 @@
-# Bandit Level 12 → Level 13
+# OverTheWire Bandit — Level 12
 
 ## Objective
-Retrieve the password for the next level from a file that has been **compressed multiple times** using common Linux compression formats.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
+Extract the password hidden in a file that has been repeatedly compressed and encoded.
 
-## Challenge Overview
-The password is hidden inside a file named `data.txt` that is **heavily compressed**.  
-File extensions and `file` command hints show nested compression formats like:
-- gzip (.gz)  
-- bzip2 (.bz2)  
-- tar (.tar)  
+## Access
 
-Simply `cat` or `less` will not reveal the password.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit12
 
-## Approach
-1. Inspect the file type:
-```bash
-file data.txt
+## Method
+
+The file contains data that has gone through multiple layers of compression and encoding.
+
+By identifying each format step-by-step and reversing the process iteratively, the original plaintext containing the password can be recovered.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
+```
+
+## Key Takeaway
+
+* Layered encoding and compression require systematic analysis.
+* Rushing without identifying formats leads to mistakes.
