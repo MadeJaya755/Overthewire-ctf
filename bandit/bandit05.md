@@ -1,24 +1,34 @@
-# Bandit Level 5 → Level 6
+# OverTheWire Bandit — Level 5
 
 ## Objective
-Retrieve the password for the next level by locating a file that matches specific criteria.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- Access via SSH
+Find the file that meets specific conditions and extract the password for the next level.
 
-## Challenge Overview
-The target directory contains many files spread across multiple subdirectories.  
-Only one file meets all required conditions:
-- Human-readable
-- Specific file size
-- Not executable
+## Access
 
-## Approach
-Instead of manually checking each file, file attributes were filtered using search criteria.  
-By narrowing down the results based on size, readability, and permissions, the target file was efficiently identified.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit5
 
-## Commands Used
-```bash
-find . -type f -size 1033c ! -executable
-cat ./inhere/maybehere07/.file2
+## Method
+
+The password is hidden somewhere in the directory tree. Only one file matches all required conditions:
+
+* Human-readable
+* Exactly 1033 bytes in size
+* Not executable
+
+By searching based on file attributes instead of filenames, the correct file can be efficiently identified and read.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+HWasnPhtq9AVKe0dmk45nxy20cvUa6EG
+```
+
+## Key Takeaway
+
+* Attribute-based searching is faster than manual inspection.
+* Efficient enumeration saves time and reduces mistakes.
