@@ -1,31 +1,110 @@
-## Documentation Approach
+# OverTheWire Wargames — Security Practice Documentation
 
-This repository documents each OverTheWire level using structured write-ups supported by visual evidence where appropriate.
+This repository contains structured technical documentation of my work on **OverTheWire Wargames**, focused on demonstrating real understanding of security fundamentals rather than listing raw commands or copied solutions.
 
-Screenshots are used selectively to:
-- Illustrate command execution and terminal output
-- Support key steps in the problem-solving process
-- Improve clarity of technical explanations
+All activities documented here were performed **exclusively in legal wargame/CTF environments** provided by OverTheWire.
 
-Each screenshot is accompanied by written context explaining the reasoning and actions taken, rather than relying on images alone.
-## Visual Evidence Handling
+---
 
-Some write-ups include screenshots (e.g., terminal output) as part of the documentation.  
-To maintain security best practices:
+## 🎯 Purpose of This Repository
 
-- Sensitive information such as passwords, private keys, and tokens is **redacted or omitted**
-- Screenshots are used only to support understanding, not to expose credentials
-- Private key files or raw secrets are **never committed** to the repository
+* Build a solid **attacker mindset** through hands-on practice
+* Strengthen **core security fundamentals** (Linux, authentication, cryptography, web security)
+* Provide **clear, reviewable technical documentation** suitable for recruiters and senior security engineers
 
-This approach ensures the repository remains safe, professional, and suitable for public viewing.
+This repository is **not a shortcut guide**. It is written for readers who care about methodology, reasoning, and learning outcomes.
 
-## Documentation Notes
+---
 
-Each challenge is documented individually with structured explanations.  
-Where appropriate, screenshots are included to support key steps while ensuring sensitive information is redacted and security best practices are maintained.
+## 🧠 Completed Wargames
 
+The following OverTheWire wargames have been fully completed and documented:
 
-## Notes
+* **Bandit** — *Completed up to level 26*
+  Focus: Linux basics, SSH, file handling, permissions, basic scripting
 
-This repository prioritizes clear explanations, structured documentation, and security hygiene.  
-The goal is to demonstrate practical understanding and problem-solving methodology rather than simply presenting solutions.
+* **Natas** — *Completed up to level 26*
+  Focus: Web security, authentication flaws, injection, logic vulnerabilities
+
+* **Leviathan** — *Completed (all levels)*
+  Focus: Basic binary exploitation and privilege escalation concepts
+
+* **Krypton** — *Completed (all levels)*
+  Focus: Classical cryptography weaknesses and cryptanalysis
+
+---
+
+## 📁 Repository Structure
+
+```
+overthewire/
+├── README.md
+├── bandit/
+│   ├── bandit0-1.md
+│   ├── bandit1-2.md
+│   └── ...
+├── leviathan/
+│   ├── leviathan0-1.md
+│   └── ...
+├── natas/
+│   ├── natas0-1.md
+│   └── ...
+├── krypton/
+│   ├── krypton0-1.md
+│   └── ...
+└── notes/
+    └── general-security-notes.md
+```
+
+The structure is intentionally kept clean to ensure:
+
+* Easy navigation
+* Clear level-by-level progression
+* Readable and auditable documentation
+
+---
+
+## 🧩 Documentation Format
+
+Each level is documented using a consistent structure:
+
+* **Objective**
+* **Access / Credentials**
+* **Enumeration**
+* **Exploitation**
+* **Result**
+* **Key Takeaways**
+
+Documentation without takeaways is considered incomplete.
+
+---
+
+## ⚠️ Disclaimer
+
+* Passwords and flags may change over time
+* The focus of this repository is **methodology and reasoning**, not secrets
+* Blind copy-paste defeats the purpose of learning
+
+---
+
+## 🚀 Why This Matters
+
+In real-world security work, memorizing commands is irrelevant.
+What matters:
+
+* How you think
+* How you analyze problems
+* How clearly you document your findings
+
+A security practitioner who cannot write proper documentation is only half effective.
+
+---
+
+## 📌 Status
+
+* Progress: Actively maintained
+* Documentation is continuously reviewed and refined
+
+---
+
+If you are reviewing this repository as a recruiter or security engineer: yes, the tone is intentional. Clarity beats decoration.
