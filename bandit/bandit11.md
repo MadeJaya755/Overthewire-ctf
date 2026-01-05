@@ -1,28 +1,30 @@
-# Bandit Level 11 → Level 12
+# OverTheWire Bandit — Level 11
 
 ## Objective
-Retrieve the password for the next level from a file where all lowercase and uppercase letters have been rotated by 13 positions (ROT13).
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
+Recover the password from a file where all letters have been rotated.
 
-## Challenge Overview
-The password is stored in a file named `data.txt`.  
-The content appears readable, but the characters are shifted, making the text meaningless at first glance.
+## Access
 
-This is a classic **ROT13** transformation:
-- a ↔ n  
-- A ↔ N  
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit11
 
-No encryption, no mystery. Just letter rotation.
+## Method
 
-## Approach
-1. Display the file to confirm it contains ROT13-encoded text.
-2. Use the `tr` command to translate characters back to their original positions.
-3. Read the decoded output to obtain the password.
+The file content is obfuscated using a simple letter rotation (ROT13).
 
-## Commands Used
-```bash
-cat data.txt
-cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+By reversing the character substitution, the original readable text and password can be restored.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+```
+
+## Key Takeaway
+
+* Obfuscation is not security.
+* Simple substitution ciphers offer no real protection.
