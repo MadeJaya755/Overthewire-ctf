@@ -1,21 +1,30 @@
-# Bandit Level 9 → Level 10
+# OverTheWire Bandit — Level 9
 
 ## Objective
-Retrieve the password for the next level from a binary file by extracting human-readable strings.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- Access via SSH
+Extract the password hidden within a file containing mostly non-printable characters.
 
-## Challenge Overview
-The password is stored inside a binary file.  
-Directly displaying the file output produces unreadable characters.
+## Access
 
-## Approach
-Instead of reading the file directly, a utility was used to extract printable strings.  
-The output was then filtered to locate the line containing the password.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit9
 
-## Commands Used
-```bash
-strings data.txt
-strings data.txt | grep "="
+## Method
+
+The target file includes many non-printable characters, making direct reading ineffective.
+
+By extracting only human-readable strings and searching for meaningful output, the password can be identified efficiently.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+```
+
+## Key Takeaway
+
+* Binary data often hides readable strings.
+* Filtering readable content is essential when analyzing unknown files.
