@@ -1,27 +1,23 @@
-# Bandit Level 15 → Level 16
+# OverTheWire Bandit — Level 15
 
 ## Objective
-Retrieve the password for the next level by connecting to a secure SSL/TLS-enabled service.
+Retrieve the password for the next level by submitting the current password to an SSL-encrypted network service running on localhost.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
-- SSL/TLS service on localhost port 30001
+## Access
+* **Host:** bandit.labs.overthewire.org
+* **Port:** 2220
+* **Username:** bandit15
 
-## Challenge Overview
-Mirip level sebelumnya, tapi sekarang:
-- Service berjalan di port **30001**
-- Koneksi **wajib SSL/TLS**
-- Netcat biasa akan gagal
+## Method
+The service on port **30001** requires the current password but operates over **SSL/TLS** encryption. Standard tools like Netcat cannot natively handle the encryption handshake.
 
-Kalau masih maksa `nc`, berarti belum ngerti bedanya TCP polos vs encrypted channel.
+By using **OpenSSL** (`openssl s_client -connect localhost:30001`) to establish a secure connection and submitting the current password (`kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx`), the service accepts the input and returns the password for the next level.
 
-## Approach
-1. Read current password from `/etc/bandit_pass/bandit15`.
-2. Connect to the SSL service using `openssl s_client`.
-3. Send the password through the encrypted connection.
-4. Read the response containing the next password.
+## Result
+Password for the next level retrieved successfully.
 
-## Commands Used
-```bash
-cat /etc/bandit_pass/bandit15
+`EReVavePLFHtFlFsjn3hyzMlvSuSAcRD`
+
+## Key Takeaway
+* Network services may require encrypted communication channels (SSL/TLS).
+* The `openssl s_client` command is a vital tool for debugging and interacting with SSL-enabled services when standard text-based tools fail.
