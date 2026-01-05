@@ -1,25 +1,30 @@
-# Bandit Level 10 → Level 11
+# OverTheWire Bandit — Level 10
 
 ## Objective
-Retrieve the password for the next level from a file that is encoded using Base64.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- SSH access
+Retrieve the password stored in a file encoded using Base64.
 
-## Challenge Overview
-The password is stored in a file named `data.txt`.  
-The file does not contain readable plain text, but instead appears to be Base64-encoded.
+## Access
 
-Displaying the file directly shows encoded data that cannot be used as a password without decoding.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit10
 
-## Approach
-1. Inspect the file contents to confirm it is not plain text.
-2. Identify the encoding format (Base64).
-3. Decode the file using the `base64` utility.
-4. Extract the decoded password from the output.
+## Method
 
-## Commands Used
-```bash
-cat data.txt
-base64 --decode data.txt
+The file content is not plaintext but encoded.
+
+By identifying the encoding format and decoding it correctly, the original password can be recovered.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+```
+
+## Key Takeaway
+
+* Encoding is not encryption.
+* Always check whether data is merely transformed rather than protected.
