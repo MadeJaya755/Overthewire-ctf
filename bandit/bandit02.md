@@ -1,20 +1,30 @@
-# Bandit Level 2 → Level 3
+# OverTheWire Bandit — Level 2
 
 ## Objective
-Retrieve the password for the next level from a file with spaces in its name.
 
-## Environment
-- Remote Linux system (OverTheWire Bandit)
-- Access via SSH
+Retrieve the password stored in a file with spaces in its filename.
 
-## Challenge Overview
-The target file contains spaces in its filename, which prevents direct access without proper handling.
+## Access
 
-## Approach
-After listing the files in the home directory, a file with spaces in its name was identified.  
-To read the file correctly, the filename was enclosed in quotes to ensure it was interpreted as a single argument.
+* Host: bandit.labs.overthewire.org
+* Port: 2220
+* Username: bandit2
 
-## Commands Used
-```bash
-ls
-cat "spaces in this filename"
+## Method
+
+The target file contains spaces in its name, which requires proper escaping or quoting to be accessed correctly via the shell.
+
+By enclosing the filename in quotes, the file can be read without issues.
+
+## Result
+
+Password for the next level retrieved successfully.
+
+```
+MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
+```
+
+## Key Takeaway
+
+* Filenames with spaces must be quoted or escaped.
+* Shell parsing rules matter in real environments.
