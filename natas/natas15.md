@@ -1,39 +1,41 @@
-# Natas Level 15 → Level 16
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+
+# OverTheWire Natas — Level 15
 
 ## Objective
-Retrieve the password by exploiting blind SQL injection through conditional responses.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
-- Backend database
+Extract data from the database using a Boolean-based Blind SQL Injection vulnerability, where the application returns no data but indicates whether a query is true or false.
 
-## Challenge Overview
-The application checks whether a submitted username exists in the database.  
-It does not display query results directly—only a boolean-style response.
+## Access
 
-No error messages. No output. Just yes or no.
+* URL: http://natas15.natas.labs.overthewire.org/
+* Username: natas15
+* Password: hPkjKYviLQctEW33QmuXL6eDVfMW4sGo
 
-This is a **blind SQL injection** scenario.
+## Method
 
-## Approach
-Although the query output is not visible, conditional SQL statements can still be evaluated.  
-By injecting logical conditions and observing the application's response, the password can be extracted character by character.
+The application checks if a username exists. The source code uses the query:
+`SELECT * from users where username="<input>"`
 
-This is slow, methodical, and unavoidable.
+While the query is vulnerable to injection, the application does not print the result (e.g., the password). It only says "This user exists" or "This user doesn't exist."
 
-## Steps Taken
-1. Open the Natas Level 15 webpage.
-2. Submit a normal username to observe the response.
-3. Inject conditional SQL statements to test character values.
-4. Use iterative queries to enumerate the password one character at a time.
-5. Reconstruct the full password.
+To exploit this, we use **Blind SQL Injection**. We can ask the database true/false questions to guess the password character by character. We inject a query to check if the password for user `natas16` starts with a specific character.
 
-## Tools Used
-- Web Browser
-- Manual SQL injection
-- Logical inference
+**Payload Concept:**
+`natas16" AND password LIKE BINARY "a%`
+
+If the response is "This user exists," the first letter is 'a'. If not, we try 'b', and so on. This process requires a script (e.g., Python) to automate the brute-forcing of all 32 characters.
 
 ## Result
-The password for **Natas Level 16** was successfully extracted using blind SQL injection.
+
+Password for the next level obtained successfully.
+
+EqjHJbo7LFNb8vwhHb9s75hokh5TF0OC
+
+
+## Key Takeaway
+
+* Even if an application does not display database errors or data, it can still be vulnerable to Blind SQL Injection.
+* The `LIKE BINARY` operator ensures case-sensitive matching, which is crucial for passwords.
+</div>
