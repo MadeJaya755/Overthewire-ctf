@@ -1,36 +1,38 @@
-# Natas Level 21 → Level 22
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+
+# OverTheWire Natas — Level 21
 
 ## Objective
-Retrieve the password by abusing inconsistent authorization logic across related applications.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Multiple related web applications
-- HTTP Basic Authentication
-- Shared session handling
+Exploit a session synchronization vulnerability between two co-located websites to inject administrative privileges.
 
-## Challenge Overview
-The level consists of two related web pages hosted on the same server.  
-One page allows modifying user-related settings, while the other checks authorization status.
+## Access
 
-Authorization logic is split across applications.
+* URL: http://natas21.natas.labs.overthewire.org/
+* Username: natas21
+* Password: d8rwGBl0Xslg3b76uh3fEbSlnOUBlozz
 
-## Approach
-Session data modified in one application is trusted blindly by the other.  
-By manipulating session values on the less restricted page, privileged access can be obtained on the protected page.
+## Method
 
-This is a classic **trust boundary failure**.
+The main website reads session data but does not provide a way to modify it. However, the source code references a "co-located" website at `http://natas21-experiment.natas.labs.overthewire.org/`.
 
-## Steps Taken
-1. Open the Natas Level 21 main page.
-2. Identify the secondary application that modifies session data.
-3. Change session values to indicate privileged access.
-4. Return to the protected page using the same session.
-5. Extract the password.
+The experimental site allows users to update their session variables, including an `admin` flag. Since both sites are hosted on the same server and share the same session storage path, we can create a session on the experiment site and use it on the main site.
 
-## Tools Used
-- Web Browser
-- Session manipulation
+1.  **Visit the Experiment Site:** Go to the experiment URL.
+2.  **Inject Admin Status:** Submit the form to update the session with `admin=1`.
+3.  **Capture Session ID:** Copy the value of the `PHPSESSID` cookie from the experiment site.
+4.  **Hijack Session:** Return to the main `natas21` website. Edit the `PHPSESSID` cookie to match the one from the experiment site and reload the page.
 
 ## Result
-The password for **Natas Level 22** was successfully retrieved by abusing shared session trust.
+
+Password for the next level obtained successfully.
+
+dIUQcI3uSus1JEOSSWRAEXBG8KbR8tRs
+
+
+## Key Takeaway
+
+* Applications hosted on the same server often share session storage directories (`/tmp` or `/var/lib/php/sessions`).
+* If session IDs are not segregated by application, vulnerabilities in one application can compromise others.
+</div>
