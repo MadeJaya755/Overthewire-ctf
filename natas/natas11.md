@@ -1,39 +1,48 @@
-# Natas Level 11 → Level 12
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+
+# OverTheWire Natas — Level 11
 
 ## Objective
-Retrieve the password by breaking weak cryptographic logic used to protect client-side data.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
+Exploit weak cryptography (XOR encryption) to manipulate the contents of a protected cookie and escalate privileges.
 
-## Challenge Overview
-The application uses a cookie to store user-related data.  
-The data appears encrypted and is assumed to be secure.
+## Access
 
-However, the encryption mechanism is custom-made.
+* URL: http://natas11.natas.labs.overthewire.org/
+* Username: natas11
+* Password: yZdkjAYZRd3R7tq7T5kXMjMJlOIkzDeB
 
-That is already a red flag.
+## Method
 
-## Approach
-The source code reveals that the cookie is encrypted using XOR with a repeating key.  
-Because XOR is reversible and the structure of the plaintext is predictable, the key can be recovered.
+The application stores user settings (background color and a "showpassword" flag) in a cookie named `data`. The source code reveals that this data is a JSON object that is XOR encrypted and then Base64 encoded.
 
-Once the key is known, the cookie can be decrypted, modified, and re-encrypted to gain access.
+Because the plaintext structure is known (default values are visible in the source), a Known Plaintext Attack can be performed to recover the encryption key.
 
-## Steps Taken
-1. View the page source to understand how the cookie is generated.
-2. Extract the encrypted cookie value.
-3. Analyze the XOR operation and recover the encryption key.
-4. Decrypt the cookie and modify the data to enable access.
-5. Re-encrypt the cookie and send it back to the server.
-6. Extract the password displayed.
+1.  **Recover the Key:**
+    * Ciphertext (from cookie): `ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw=`
+    * Known Plaintext: `json_encode(array("showpassword"=>"no", "bgcolor"=>"#ffffff"))`
+    * Operation: `Key = Plaintext ^ Ciphertext`
+    * Resulting Key: `qw8J` (repeating).
 
-## Tools Used
-- Web Browser
-- View Page Source
-- Manual XOR analysis
+2.  **Forge the Payload:**
+    * New Plaintext: `json_encode(array("showpassword"=>"yes", "bgcolor"=>"#ffffff"))`
+    * Encrypt the new plaintext using the recovered key `qw8J`.
+    * Base64 encode the result.
+
+3.  **Inject Cookie:**
+    Replace the value of the `data` cookie in the browser with the forged string and reload the page.
 
 ## Result
-The password for **Natas Level 12** was successfully retrieved by exploiting weak XOR-based encryption.
+
+Password for the next level obtained successfully.
+
+trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC
+
+
+## Key Takeaway
+
+* XOR encryption is symmetric; if an attacker knows the plaintext and the ciphertext, they can derive the key.
+* Never use custom, weak encryption schemes for sensitive data.
+* Client-side data storage (cookies) should not be trusted for authorization states.
+</div>
