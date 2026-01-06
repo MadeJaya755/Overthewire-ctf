@@ -1,6 +1,5 @@
 <div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
 
-Markdown
 
 # OverTheWire Natas — Level 20
 
