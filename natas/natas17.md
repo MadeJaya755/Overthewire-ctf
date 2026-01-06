@@ -1,38 +1,36 @@
-# Natas Level 17 → Level 18
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+# OverTheWire Natas — Level 17
 
 ## Objective
-Retrieve the password by exploiting time-based blind SQL injection.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
-- Backend database
+Extract data using Time-Based Blind SQL Injection, as the server provides no visual feedback (output or errors) regarding the query result.
 
-## Challenge Overview
-The application checks user input against a database but provides no visible output.  
-There are no error messages and no content differences in responses.
+## Access
 
-The only observable difference is **response time**.
+* URL: http://natas17.natas.labs.overthewire.org/
+* Username: natas17
+* Password: 6OG1PbKdVjyBlpxgD4DDbRG6ZLlCGgCJ
 
-## Approach
-Since no data is returned directly, time delays can be used as a side channel.  
-By injecting SQL statements that cause conditional delays, database values can be inferred.
+## Method
 
-Each character of the password is extracted by measuring response time.
+This level is similar to Level 15, but the code has been patched to not print "User exists." We cannot see the result of our query. However, we can measure *how long* the database takes to respond.
 
-## Steps Taken
-1. Open the Natas Level 17 webpage.
-2. Submit a normal request to establish baseline response time.
-3. Inject time-based SQL conditions.
-4. Measure server response delays.
-5. Extract the password character by character.
-6. Reconstruct the full password.
+We can inject a `SLEEP()` command. If our guess is correct, the database will pause before responding.
+**Payload Logic:**
+`natas18" AND IF(password LIKE BINARY "a%", SLEEP(5), 0) --`
 
-## Tools Used
-- Web Browser
-- Manual time-based SQL injection
-- Timing analysis
+If the response takes longer than 5 seconds, the first character is 'a'. If it returns immediately, the guess is wrong. A script is required to automate this timing analysis for each character.
 
 ## Result
-The password for **Natas Level 18** was successfully retrieved using time-based blind SQL injection.
+
+Password for the next level obtained successfully.
+
+tnwER7PdfWkxsG4FNWUtoAZ9VyZTJqJr
+
+
+## Key Takeaway
+
+* Even with zero visual feedback, SQL injection is possible via side channels like response time.
+* Suppressing errors does not fix the underlying vulnerability.
+</div>
