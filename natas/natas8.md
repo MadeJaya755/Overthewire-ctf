@@ -1,36 +1,39 @@
-# Natas Level 8 → Level 9
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+Markdown
+
+# OverTheWire Natas — Level 8
 
 ## Objective
-Retrieve the password by reversing a weak encoding mechanism used to hide a secret value.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
+Reverse engineer an encoded secret string found in the source code to bypass a security check.
 
-## Challenge Overview
-The application asks for a secret value and validates it server-side.  
-The secret is not visible directly, but part of the validation logic is exposed in the page source.
+## Access
 
-The secret is not encrypted — only encoded.
+* URL: http://natas8.natas.labs.overthewire.org/
+* Username: natas8
+* Password: xcoXLmzMkoIP9D7hlgPlh9XD7OgLAe5Q
 
-## Approach
-The source code reveals that the secret undergoes multiple encoding steps before comparison.  
-By reversing these steps in the correct order, the original secret can be recovered.
+## Method
 
-Once the correct secret is submitted, the password is revealed.
+The page requires a secret passphrase. The "View sourcecode" link reveals the PHP logic used to encode the secret: `bin2hex(strrev(base64_encode($secret)))`. The encoded string is provided in the variable `$encodedSecret` (`3d3d516343746d4d6d6c315669563362`).
 
-## Steps Taken
-1. View the page source.
-2. Identify the encoding functions applied to the secret.
-3. Reverse the encoding process manually.
-4. Submit the decoded secret through the form.
-5. Extract the password displayed.
+To retrieve the original secret, the encoding operations must be reversed in the specific order:
+1. `hex2bin`: Convert hexadecimal back to binary/string (`==QcCtmMml1ViV3b`).
+2. `strrev`: Reverse the string (`b3ViV1lmMmCtCcQ==`).
+3. `base64_decode`: Decode the Base64 string.
 
-## Tools Used
-- Web Browser
-- View Page Source
-- Manual decoding
+The resulting secret is `oubWYf2kBq`. Submitting this value grants access to the credentials.
 
 ## Result
-The password for **Natas Level 9** was successfully retrieved by reversing the encoding logic.
+
+Password for the next level obtained successfully.
+
+ZE1ck82lmdGIoErlhQgWND6j2Wzz6b6t
+
+
+## Key Takeaway
+
+* Encoding is not encryption; if the algorithm is known, it can be reversed.
+* Security mechanisms relying on obscure encoding methods are easily bypassed by analyzing the source code.
+</div>
