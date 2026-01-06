@@ -18,8 +18,7 @@ Exploit a command injection vulnerability in a search utility to execute arbitra
 
 The application provides a search box that looks for words in a dictionary. Inspecting the source code reveals the following backend logic:
 
-```php
-passthru("grep -i $key dictionary.txt");
+```php passthru("grep -i $key dictionary.txt");
 The $key variable (user input) is passed directly into the passthru function without sanitization. This allows for Command Injection. We can use a semicolon (;) to terminate the grep command and append a new command to read the password file.
 
 Payload: ; cat /etc/natas_webpass/natas10
