@@ -1,35 +1,40 @@
-# Natas Level 23 → Level 24
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+# OverTheWire Natas — Level 23
 
 ## Objective
-Retrieve the password by exploiting weak string comparison logic.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
+Bypass a password check by exploiting PHP's loose type comparison ("Type Juggling") behavior.
 
-## Challenge Overview
-The application checks whether a provided input matches a required phrase.  
-Access is granted only if the condition evaluates to true.
+## Access
 
-The comparison logic is flawed.
+* URL: http://natas23.natas.labs.overthewire.org/
+* Username: natas23
+* Password: MeuqmfJ8DDKuTr5pcvzFKSwlxedZYEWd
 
-## Approach
-The server performs an unsafe string comparison that can be manipulated.  
-By crafting input that satisfies the comparison condition without matching the exact expected string, the check can be bypassed.
+## Method
 
-This exploits improper use of comparison operators.
+The application checks user input against a request parameter `passwd`. The logic requires two conditions to be met simultaneously:
+1.  The input must contain the string "iloveyou" (`strstr($passwd,"iloveyou")`).
+2.  The input must be numerically greater than 10 (`$passwd > 10`).
 
-## Steps Taken
-1. Open the Natas Level 23 webpage.
-2. Review the validation message and behavior.
-3. Craft input that triggers the comparison condition.
-4. Submit the manipulated input.
-5. Extract the password displayed.
+In PHP, when a string is compared to a number, the interpreter parses the string from the beginning to find a numerical value.
+* Input `iloveyou` converts to `0` (False).
+* Input `10iloveyou` converts to `10` (False, as 10 is not > 10).
+* Input `11iloveyou` converts to `11` (True, 11 > 10).
 
-## Tools Used
-- Web Browser
-- Manual input manipulation
+**Payload:**
+`11iloveyou`
 
 ## Result
-The password for **Natas Level 24** was successfully retrieved by abusing weak string comparison.
+
+Password for the next level obtained successfully.
+
+ckELKUWZUfpOv6uxS6M7lXBpBssJZ4Ws
+
+
+## Key Takeaway
+
+* PHP "Magic Comparisons" (loose typing) can lead to logic bypasses.
+* Always use strict comparison operators (`===`) when validating security-critical input.
+</div>
