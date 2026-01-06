@@ -1,35 +1,41 @@
-# Natas Level 16 → Level 17
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+
+# OverTheWire Natas — Level 16
 
 ## Objective
-Retrieve the password by exploiting command injection in a web parameter.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
+Exploit a Blind Command Injection vulnerability using command substitution to extract the password character by character.
 
-## Challenge Overview
-The application allows users to submit input that is later used in server-side commands.  
-Previous filtering attempts are present, but insufficient.
+## Access
 
-Direct execution of user input on the server is possible.
+* URL: http://natas16.natas.labs.overthewire.org/
+* Username: natas16
+* Password: EqjHJbo7LFNb8vwhHb9s75hokh5TF0OC
 
-## Approach
-The parameter is passed to a shell command without proper sanitization.  
-By carefully crafting input, arbitrary commands can be executed.
+## Method
 
-This allows reading the password file on the server.
+The application executes a `grep` search on a dictionary file based on user input. The code filters characters like `;`, `|`, and `&` to prevent standard command injection, but it does not filter dollar signs `$` or parentheses `()`.
 
-## Steps Taken
-1. Open the Natas Level 16 webpage.
-2. Analyze the input field and observe server response.
-3. Inject a shell command to read the password file.
-4. Submit the crafted input.
-5. Capture the password from the server response.
+This allows for **Command Substitution** using `$(command)`. The output of the injected command replaces the `$(...)` string before the outer `grep` executes.
 
-## Tools Used
-- Web Browser
-- Manual command injection
+We can inject a sub-command to search for the password.
+**Logic:**
+1. Inject: `$(grep ^a /etc/natas_webpass/natas17)`
+2. **If the password starts with 'a':** The sub-command returns the password. The main `grep` searches for this password in `dictionary.txt`. Since passwords aren't dictionary words, the result is empty (No output).
+3. **If the password does NOT start with 'a':** The sub-command returns nothing (empty string). The main `grep` searches for "" (nothing) in `dictionary.txt`, which matches every line (Large output).
+
+By automating this check (Empty Response = Correct Character), we can brute-force the password.
 
 ## Result
-The password for **Natas Level 17** was successfully retrieved via command injection.
+
+Password for the next level obtained successfully.
+
+6OG1PbKdVjyBlpxgD4DDbRG6ZLlCGgCJ
+
+
+## Key Takeaway
+
+* Blacklisting characters is difficult to do completely.
+* Command substitution (`$(...)` or backticks `` ` ``) allows execution even inside quoted strings in many shell environments.
+</div>
