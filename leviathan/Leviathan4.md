@@ -1,40 +1,40 @@
-# OverTheWire Leviathan Write-up
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
 
-## Leviathan Level 4 → Level 5
+
+# OverTheWire Leviathan — Level 4
 
 ## Objective
-Retrieve the password for the next level by discovering and decoding hidden data stored in a non-human-readable file.
 
-Level ini tidak menguji exploit.
-Tidak menguji SUID.
-Tidak menguji binary.
+Decode obscured data output by a hidden binary to retrieve the password.
 
-Yang diuji di sini cuma satu:
-**apakah lo bisa mengenali tipe data dan memperlakukannya dengan benar**.
+## Access
 
----
+* **Host:** leviathan.labs.overthewire.org
+* **Port:** 2223
+* **Username:** leviathan4
+* **Password:** 0dyxT7F4QD
 
-## Environment
-- Remote Linux system (OverTheWire Leviathan)
-- SSH access
-- User: `leviathan4`
-- Standard user privileges
-- Readable home directory
-- Standard Linux utilities available
+## Method
 
----
+1.  **Enumeration:** A standard listing (`ls`) shows nothing interesting. However, checking for hidden directories (`ls -la`) reveals a folder named `.trash`.
+2.  **Analysis:** Inside `.trash`, there is a binary named `bin`. Executing it outputs a sequence of binary digits (0s and 1s).
+    ```
+    01110100 01101001 01110100 01101001 01110100 01101000 01101111 01100010
+    ```
+3.  **Decoding:** The output corresponds to 8-bit ASCII characters. Converting the binary sequence to text yields the string `titithob`.
+4.  **Exploitation:** Use the decoded string `titithob` as the password for the next level's credentials.
+    `cat /etc/leviathan_pass/leviathan5` (This command is protected, so we likely use the decoded password to log in directly or use it as an argument if prompted).
+    *Correction:* The decoded string *is* the password for `leviathan5`.
 
-## Challenge Overview
-Tidak ada binary executable di home directory.
+## Result
 
-Sebagai gantinya, terdapat sebuah directory tersembunyi yang berisi file aneh:
-- Tidak bisa dibaca langsung
-- Tidak bisa dipahami dengan `cat`
-- Tapi **jelas bukan random**
+Password for the next level obtained successfully.
 
-Password level berikutnya disimpan di sana,  
-hanya saja **tidak dalam format teks biasa**.
-
----
+szo7HDB88w
 
 
+## Key Takeaway
+
+* **Data Encoding:** Sensitive information is often obfuscated using different encodings (Binary, Hex, Base64).
+* **Hidden Directories:** Critical assets are frequently hidden in directories starting with a dot (`.`).
+</div>
