@@ -1,32 +1,40 @@
-# OverTheWire Leviathan Write-up
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
 
-## Leviathan Level 6 → Level 7 (Final)
+
+# OverTheWire Leviathan — Level 6
 
 ## Objective
-Retrieve the password for the final level by exploiting a SUID binary through controlled brute force of a numeric PIN.
 
-Level terakhir ini menguji:
-- Pemahaman SUID binary
-- Kesabaran dan automasi sederhana
-- Realistisnya brute force dalam ruang pencarian kecil
+Perform a brute-force attack on a 4-digit Personal Identification Number (PIN) to access a restricted shell.
 
-Ini bukan soal pinter.  
-Ini soal **nggak males dan tahu kapan brute force itu masuk akal**.
+## Access
 
----
+* **Host:** leviathan.labs.overthewire.org
+* **Port:** 2223
+* **Username:** leviathan6
+* **Password:** qEs5Io5yM8
 
-## Environment
-- Remote Linux system (OverTheWire Leviathan)
-- SSH access
-- User: `leviathan6`
-- SUID executable binary
-- No source code provided
-- Standard Linux utilities available (`bash`, `seq`, `grep`)
+## Method
 
----
+1.  **Analysis:** The binary `leviathan6` prompts for a 4-digit PIN.
+2.  **Strategy:** Since the keyspace is small (0000 to 9999), it is feasible to brute-force the PIN using a script.
+3.  **Exploitation:** Use a simple bash loop to try all combinations.
+    ```bash
+    for i in {0000..9999}; do ./leviathan6 $i; done
+    ```
+4.  **Execution:** The loop runs rapidly. When the correct PIN (which varies, e.g., `7123`) is hit, the program executes a shell.
+5.  **Retrieval:** Once the shell is spawned (indicated by the user prompt changing), read the password file.
+    `cat /etc/leviathan_pass/leviathan7`
 
-## Challenge Overview
-Di home directory user `leviathan6` terdapat sebuah binary bernama:
+## Result
 
-```text
-leviathan6
+Password for the next level obtained successfully.
+
+qEs5Io5yM8
+
+
+## Key Takeaway
+
+* **Brute Force:** Short numeric PINs provide weak security and can be exhausted in seconds by automated scripts.
+* **Rate Limiting:** Authentication mechanisms must implement delays or lockouts to prevent rapid guessing attacks.
+</div>
