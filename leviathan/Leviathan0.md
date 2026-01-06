@@ -1,58 +1,37 @@
-# Leviathan Level 0 → Level 1
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+
+# OverTheWire Leviathan — Level 0
 
 ## Objective
-Retrieve the password for the next level by performing basic file enumeration on the target system.
 
-Level ini menguji hal paling dasar: **apakah bisa membaca lingkungan Linux dengan benar**.
+Log in to the Leviathan server using SSH and locate the password for the next level hidden within the user's home directory.
 
----
+## Access
 
-## Environment
-- Remote Linux system (OverTheWire Leviathan)
-- SSH access
-- User: `leviathan0`
-- Standard user privileges
-- Readable home directory
+* **Host:** leviathan.labs.overthewire.org
+* **Port:** 2223
+* **Username:** leviathan0
+* **Password:** leviathan0
 
----
+## Method
 
-## Challenge Overview
-Tidak ada binary.
-Tidak ada SUID.
-Tidak ada exploit.
+1.  **Establish Connection:** Connect to the server via SSH on port 2223.
+    `ssh leviathan0@leviathan.labs.overthewire.org -p 2223`
+2.  **Reconnaissance:** List all files in the home directory, including hidden files, using `ls -la`.
+3.  **Identify Targets:** A hidden directory named `.backup` is observed.
+4.  **Extraction:** Navigate into the directory (`cd .backup`) and list its contents. A file named `bookmarks.html` is found. Searching this file (using `grep` or `cat`) reveals the password hidden in the HTML text.
+    `grep "password" bookmarks.html`
 
-Password **sudah tersedia di home directory**, disimpan dalam sebuah file tersembunyi.
-Satu-satunya tantangan adalah **menemukannya**.
+## Result
 
----
+Password for the next level obtained successfully.
 
-## Approach
-
-### 1. Login via SSH
-```bash
-ssh leviathan0@leviathan.labs.overthewire.org -p 2223
-
-2. Enumerate home directory
-ls -la
+3QJ3TgzHDq
 
 
-Output akan menampilkan file tersembunyi:
+## Key Takeaway
 
-.bookmarks.html
-
-
-File ini readable oleh user saat ini.
-
-3. Inspect file content
-cat .bookmarks.html
-
-
-Di dalam file HTML tersebut terdapat bookmark yang menyimpan credential secara plain text.
-
-Password untuk user leviathan1 dapat langsung dibaca tanpa decoding atau dekripsi.
-
-Result
-
-Password untuk Leviathan Level 1 berhasil diperoleh dari file .bookmarks.html.
-
-
+* **Enumeration:** Always check for hidden files (starting with `.`) in Linux environments.
+* **Grep:** Text search tools are essential for filtering large files to find sensitive keywords.
+</div>
