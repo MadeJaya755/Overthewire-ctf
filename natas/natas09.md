@@ -25,9 +25,9 @@ Payload: ; cat /etc/natas_webpass/natas10
 
 Entering this into the search field executes grep, followed immediately by cat, revealing the password.
 
-*Result
-*Password for the next level obtained successfully.
-*t7I5VHvpa14sJTUGV0cbEsbYfFP2dmOu
+## Result
+Password for the next level obtained successfully.
+t7I5VHvpa14sJTUGV0cbEsbYfFP2dmOu
 
 ## Key Takeaway
 Passing unsanitized user input directly to system execution functions like passthru, system, or exec creates critical command injection vulnerabilities.
