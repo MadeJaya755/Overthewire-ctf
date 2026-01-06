@@ -1,36 +1,38 @@
-# Natas Level 24 → Level 25
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+
+# OverTheWire Natas — Level 24
 
 ## Objective
-Retrieve the password by exploiting PHP type juggling in input validation.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
-- PHP backend
+Bypass a password comparison check by exploiting the behavior of the `strcmp()` function when handling arrays.
 
-## Challenge Overview
-The application validates user input using a loose comparison.  
-The comparison logic assumes input types behave as expected.
+## Access
 
-In PHP, that assumption is wrong.
+* URL: http://natas24.natas.labs.overthewire.org/
+* Username: natas24
+* Password: ckELKUWZUfpOv6uxS6M7lXBpBssJZ4Ws
 
-## Approach
-PHP performs automatic type juggling when using loose comparison operators.  
-By supplying specially crafted input, the comparison can be forced to evaluate as true even when the values do not actually match.
+## Method
 
-This allows bypassing the validation logic.
+The code uses `strcmp($passwd, $_REQUEST["passwd"])` to check the password. If `strcmp` returns `0`, the password is considered correct.
+`strcmp` is designed to compare two strings. However, if one of the arguments is an **Array**, `strcmp` fails and returns `NULL` (or issues a warning depending on the PHP version).
 
-## Steps Taken
-1. Open the Natas Level 24 webpage.
-2. Observe the input validation behavior.
-3. Identify the use of loose comparison.
-4. Submit crafted input that abuses PHP type juggling.
-5. Extract the password displayed.
+In PHP logic, `NULL` behaves "falsy" in loose comparisons. The check `if(!strcmp(...))` evaluates `!NULL` as `True`.
 
-## Tools Used
-- Web Browser
-- Manual input crafting
+**Payload:**
+Pass the password parameter as an array array via the URL:
+`?passwd[]=1`
 
 ## Result
-The password for **Natas Level 25** was successfully retrieved by abusing PHP type juggling.
+
+Password for the next level obtained successfully.
+
+cVXXwxMS3Y26n5UZU89QgpGmWCelaQlE
+
+
+## Key Takeaway
+
+* Input validation should check the data type (String, Array, Integer) before processing.
+* Relying on functions that behave unpredictably with unexpected types creates authentication bypass vulnerabilities.
+</div>
