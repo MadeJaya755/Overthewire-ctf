@@ -1,36 +1,43 @@
-# Natas Level 20 → Level 21
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+Markdown
+
+# OverTheWire Natas — Level 20
 
 ## Objective
-Retrieve the password by exploiting insecure server-side session data handling.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
-- Server-side session storage
+Exploit a Session Injection vulnerability caused by improper handling of newline characters in session storage.
 
-## Challenge Overview
-The application stores session data on the server using a custom format.  
-User-controlled input is written directly into the session without proper validation.
+## Access
 
-Session data persists across requests.
+* URL: http://natas20.natas.labs.overthewire.org/
+* Username: natas20
+* Password: BPhv63cKE1lkQl04cE5CuFTzXe15NfiH
 
-## Approach
-By injecting crafted data into the session storage, server-side variables can be manipulated.  
-This allows overwriting values that control authorization logic.
+## Method
 
-Once the session is poisoned with privileged data, access is granted.
+The source code shows that the application manages sessions by reading and writing to a text file. It parses the file line-by-line, splitting keys and values by spaces.
+Function: `write($key, $value)` saves data as `$key $value\n`.
 
-## Steps Taken
-1. Open the Natas Level 20 webpage.
-2. Submit input that is stored in the server-side session.
-3. Inject structured data to modify session variables.
-4. Reload the page using the poisoned session.
-5. Extract the password displayed.
+We can inject a newline character (`\n` or `%0a`) into the input field to create a new entry in the session file.
+**Payload:**
+In the "name" field, enter:
+`guinea%0aadmin 1`
 
-## Tools Used
-- Web Browser
-- Manual session poisoning
+This writes:
+name guinea admin 1
+
+When the page reloads and reads the session, it interprets the second line as `admin=1`, granting access.
 
 ## Result
-The password for **Natas Level 21** was successfully retrieved via server-side session manipulation.
+
+Password for the next level obtained successfully.
+
+d8rwGBl0Xslg3b76uh3fEbSlnOUBlozz
+
+
+## Key Takeaway
+
+* When writing user input to files or logs, delimiter characters (like newlines) must be sanitized.
+* This is similar to HTTP Header Injection or Log Injection attacks.
+</div>
