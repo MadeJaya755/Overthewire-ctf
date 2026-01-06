@@ -1,36 +1,40 @@
-# Natas Level 14 → Level 15
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+
+# OverTheWire Natas — Level 14
 
 ## Objective
-Retrieve the password by exploiting SQL Injection in a login form.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
-- Backend database authentication
+Bypass a login authentication form using a classic SQL Injection vulnerability.
 
-## Challenge Overview
-The application presents a username and password login form.  
-Access is granted only if the supplied credentials match a database record.
+## Access
 
-User input is inserted directly into an SQL query.
+* URL: http://natas14.natas.labs.overthewire.org/
+* Username: natas14
+* Password: SdqIqBsFcz3yotlNYErZSZwblkm0lrvx
 
-## Approach
-The login logic does not properly sanitize user input.  
-By injecting SQL syntax into the username or password field, authentication checks can be bypassed.
+## Method
 
-This allows access without knowing valid credentials.
+The page presents a username and password login form. Examining the source code reveals the database query structure:
 
-## Steps Taken
-1. Open the Natas Level 14 webpage.
-2. Submit normal credentials to observe behavior.
-3. Inject SQL logic into an input field.
-4. Force the authentication query to always evaluate as true.
-5. Access the protected page and extract the password.
+"SELECT * from users where username=\"".$_REQUEST["username"]."\" and password=\"".$_REQUEST["password"]."\""
+The inputs are inserted directly into the SQL query without sanitization. To bypass the check, we can inject SQL syntax that makes the WHERE clause always evaluate to true.
 
-## Tools Used
-- Web Browser
-- Manual SQL injection
+Payload: In the username field, enter: " OR 1=1 --
+
+This alters the query to: SELECT * from users where username="" OR 1=1 --" and password="..." Since 1=1 is always true, the database returns a valid user record, bypassing the password check.
 
 ## Result
-The password for **Natas Level 15** was successfully retrieved via SQL Injection.
+Password for the next level obtained successfully.
+
+hPkjKYviLQctEW33QmuXL6eDVfMW4sGo
+
+## Key Takeaway
+String concatenation should never be used to build SQL queries.
+
+SQL Injection allows attackers to manipulate database queries, bypassing authentication or accessing unauthorized data.
+
+Always use Prepared Statements (Parameterized Queries) to prevent SQL injection.
+
+
+</div>
