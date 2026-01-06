@@ -1,39 +1,36 @@
-# Natas Level 13 → Level 14
+<div style="font-family: 'Times New Roman', Times, serif; font-size: 12pt;">
+
+# OverTheWire Natas — Level 13
 
 ## Objective
-Retrieve the password by bypassing server-side file type verification.
 
-## Environment
-- Web-based challenge (OverTheWire Natas)
-- Access via web browser
-- HTTP Basic Authentication
+Bypass server-side file type validation that checks for image signatures (Magic Bytes) to upload and execute a web shell.
 
-## Challenge Overview
-The application improves the previous upload restriction by validating image files using server-side checks.  
-Only files that pass the image verification are accepted.
+## Access
 
-The developer assumes this is sufficient.
+* URL: http://natas13.natas.labs.overthewire.org/
+* Username: natas13
+* Password: z3UYcr4v4uBpeX8f7EZbMHlzK4UR2XtQ
 
-It is still not.
+## Method
 
-## Approach
-The server checks whether the uploaded file is a valid image, but does not restrict executable content within it.  
-By embedding server-executable code inside a valid image file, both checks can be satisfied.
+This level improves upon the previous one by using the `exif_imagetype()` function to ensure the uploaded file is an image. However, this function only validates the file header (Magic Bytes).
 
-This allows code execution after upload.
-
-## Steps Taken
-1. Open the Natas Level 13 webpage.
-2. Analyze server-side image validation behavior.
-3. Embed executable code inside a valid image file.
-4. Upload the crafted image.
-5. Access the uploaded file to execute code.
-6. Read and extract the password.
-
-## Tools Used
-- Web Browser
-- Image manipulation
-- Manual payload crafting
+To bypass this:
+1.  **Forge the File:** Create a file that starts with the JPEG Magic Bytes (`\xFF\xD8\xFF\xE0`) followed by the PHP payload:
+    `<?php passthru('cat /etc/natas_webpass/natas14'); ?>`
+2.  **Upload & Intercept:** Upload this forged file. Intercept the request (using Burp Suite or by modifying the HTML input) to ensure the `filename` parameter ends in `.php` instead of `.jpg`.
+3.  **Execute:** Navigate to the uploaded file URL. The server sees it as an image due to the header, but the PHP interpreter executes the code because of the extension.
 
 ## Result
-The password for **Natas Level 14** was successfully retrieved despite server-side image validation.
+
+Password for the next level obtained successfully.
+
+SdqIqBsFcz3yotlNYErZSZwblkm0lrvx
+
+
+## Key Takeaway
+
+* Validating file headers (Magic Bytes) alone is insufficient to prevent malicious uploads.
+* Ideally, servers should re-encode uploaded images (stripping metadata and code) or store them on a separate server that does not execute PHP.
+</div>
